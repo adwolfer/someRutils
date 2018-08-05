@@ -18,5 +18,16 @@ bioc_required: true
 r_packages:
   - covr
 
+addons:
+  apt:
+    packages:
+      - libnetcdf-dev
+      - netcdf-bin
+      - libhdf5-dev
+
+before_install:
+ - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew update; fi"
+ - "if [ ${TRAVIS_OS_NAME} = 'osx' ]; then brew install libgit2; fi"
+	
 after_success:
   - Rscript -e 'library(covr); codecov(line_exclusions = "R/zzz.R")'
